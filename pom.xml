@@ -6,6 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>BiblioIT</name>
+	
 	<description>Bibliteca personal de libros técnicos de programación en JSF.</description>
 
 	<dependencies>
