@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Librería técnica by FJS</title>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
+	<style>
+		body {
+			font-family: 'Source Sans Pro', sans-serif;
+		}
+		table {
+			font-size: 13px;
+		}
+	</style>
+</h:head>
+<h:body>
+	<h:form>
+		<h:messages id="msgs" layout="table" showDetail="true" showSummary="true"/>
+		<h:panelGrid columns="1">
+			<h:panelGrid columns="3">
+				<h:outputText value="Filtrar por nombre:"/>
+				<h:inputText id="filtroNombre" value="#{libroBB.filtroNombre}" size="60" maxlength="120"/>
+				<h:message for="filtroNombre"/>
+				
+				<h:outputText value="Filtrar por subcategoría: "/>
+				<h:selectOneMenu id="filtroSubcategoria" value="#{libroBB.filtroSubcategoria.ID}" >
+					<f:selectItem value="#{null}" itemLabel="* TODAS *"/>
+					<f:selectItems value="#{libroBB.listadoSubcategorias}" 
+						var="subcategoria" 
+						itemValue="#{subcategoria.ID}" 
+						itemLabel="#{subcategoria.nombre}"/>
+				</h:selectOneMenu>
+				<h:message for="filtroSubcategoria"/>
+			</h:panelGrid>
+			
+			<h:commandButton value="Filtrar" action="#{libroBB.filtrarListado}"/>
+			<h:panelGroup>
+				<h:commandButton value="Volver" action="/index.xhtml"/>
+				<h:commandButton value="Agregar" action="/pages/libro.xhtml"/>
+			</h:panelGroup>
+			
+			<h:outputText value="Cantidad de libros mostrados: #{libroBB.cantidad}"/>
+		</h:panelGrid>
+		
+		<h:dataTable value="#{libroBB.listado}" var="l">
+			<f:facet name="header">
+				<h:column>Listado de libros</h:column>
+			</f:facet>
+
+			<h:column>
+				<f:facet name="header">ID.</f:facet>
+				<h:link value="#{l.ID}" outcome="/pages/libro.xhtml">
+			      	<f:param name="id" value="#{l.ID}"/>
+			    </h:link>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nombre del libro</f:facet>
+				#{l.nombre}
+			</h:column>
+			<h:column>
+				<f:facet name="header">ISBN</f:facet>
+				#{l.ISBN}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Páginas</f:facet>
+				#{l.paginas}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Año</f:facet>
+				#{l.anio}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Subcategoría</f:facet>
+				#{l.subcategoria.nombre}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Categoría</f:facet>
+				#{l.subcategoria.categoria.nombre}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Editorial</f:facet>
+				#{l.editorial.nombre}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Abrev.</f:facet>
+				#{l.editorial.abreviatura}
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</h:body>
+</html> 
