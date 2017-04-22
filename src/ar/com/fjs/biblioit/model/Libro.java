@@ -20,8 +20,60 @@ public class Libro implements Serializable {
 	private String ISBN;
 	private int paginas;
 	private short anio;
+	private int calificacion;
+	private Editorial editorial;
+	private Subcategoria subcategoria;
+
+	public Libro() {
+		editorial = new Editorial();
+		subcategoria = new Subcategoria();
+	}
 	
-	public Libro() {}
+	/**
+	 * @param iD
+	 * @param nombre
+	 * @param iSBN
+	 * @param paginas
+	 * @param anio
+	 * @param editorial
+	 * @param subcategoria
+	 */
+	public Libro(long iD, String nombre, String iSBN, int paginas, short anio, 
+			int calificacion, Editorial editorial, Subcategoria subcategoria) {
+		super();
+		ID = iD;
+		this.nombre = nombre;
+		ISBN = iSBN;
+		this.paginas = paginas;
+		this.anio = anio;
+		this.calificacion = calificacion;
+		this.editorial = editorial;
+		this.subcategoria = subcategoria;
+	}
+
+	public int getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(int calificacion) {
+		this.calificacion = calificacion;
+	}
+
+	public Editorial getEditorial() {
+		return editorial;
+	}
+
+	public void setEditorial(Editorial editorial) {
+		this.editorial = editorial;
+	}
+
+	public Subcategoria getSubcategoria() {
+		return subcategoria;
+	}
+
+	public void setSubcategoria(Subcategoria subcategoria) {
+		this.subcategoria = subcategoria;
+	}
 
 	public long getID() {
 		return ID;
@@ -61,5 +113,10 @@ public class Libro implements Serializable {
 
 	public void setAnio(short anio) {
 		this.anio = anio;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(this.ID);
 	}
 }

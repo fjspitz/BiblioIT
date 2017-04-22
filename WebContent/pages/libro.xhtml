@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:viewParam name="id" value="#{shell.id}"/>
+    <f:viewAction action="#{shell.cargar}"/>
+</f:metadata>
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Librería técnica by FJS</title>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
+	<style>
+		body {
+			font-family: 'Source Sans Pro', sans-serif;
+		}
+		table {
+			font-size: 13px;
+		}
+	</style>
+</h:head>
+<h:body>
+	<h:form prependId="false">
+		<h:panelGrid columns="3">
+			<h:outputText value="ID:"/>
+			<h:inputText id="id" value="#{shell.libro.ID}"/>
+			<h:message for="id"/>
+		
+			<h:outputText value="Nombre:"/>
+			<h:inputText id="nombre" value="#{shell.libro.nombre}" required="true" size="120" maxlength="120"/>
+			<h:message for="nombre"/>
+			
+			<h:outputText value="ISBN:"/>
+			<h:inputText id="isbn" value="#{shell.libro.ISBN}"/>
+			<h:message for="isbn"/>
+			
+			<h:outputText value="Páginas:"/>
+			<h:inputText id="paginas" value="#{shell.libro.paginas}" required="true"/>
+			<h:message for="paginas"/>
+			
+			<h:outputText value="Calificación:"/>
+			<h:inputText id="calificacion" value="#{shell.libro.calificacion}" required="false"/>
+			<h:message for="calificacion"/>
+			
+			<h:outputText value="Año:"/>
+			<h:inputText id="anio" value="#{shell.libro.anio}" required="true"/>
+			<h:message for="anio"/>
+			
+			<h:outputText value="Subcategoría:"/>
+			<h:selectOneMenu id="subcategoria" value="#{shell.libro.subcategoria.ID}" >
+				<f:selectItems value="#{shell.listadoSubcategorias}" 
+					var="subcat" 
+					itemValue="#{subcat.ID}" 
+					itemLabel="#{subcat.nombre}"/>
+			</h:selectOneMenu>
+			<h:message for="subcategoria"/>
+			
+			<h:outputText value="Editorial:"/>
+			<h:selectOneMenu id="editorial" value="#{shell.libro.editorial.ID}" >
+				<f:selectItems value="#{shell.listadoEditoriales}" 
+					var="editorial" 
+					itemValue="#{editorial.ID}" 
+					itemLabel="#{editorial.nombre}"/>
+			</h:selectOneMenu>
+			<h:message for="editorial"/>
+			
+			<h:commandButton value="Volver" action="/index.xhtml" immediate="true"/>
+			<h:commandButton value="Guardar" action="#{shell.guardar}"/>
+			<h:outputText value=""/>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html> 

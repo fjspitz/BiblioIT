@@ -11,22 +11,78 @@
 		body {
 			font-family: 'Source Sans Pro', sans-serif;
 		}
+		table {
+			font-size: 13px;
+		}
 	</style>
 </h:head>
 <h:body>
 	<h:form>
+		<h:messages id="msgs" layout="table" showDetail="true" showSummary="true"/>
+		<h:panelGrid columns="1">
+			<h:panelGrid columns="3">
+				<h:outputText value="Filtrar por nombre:"/>
+				<h:inputText id="filtroNombre" value="#{libro.filtroNombre}" size="60" maxlength="120"/>
+				<h:message for="filtroNombre"/>
+				
+				<h:outputText value="Filtrar por subcategoría: "/>
+				<h:selectOneMenu id="filtroSubcategoria" value="#{libro.filtroSubcategoria.ID}" >
+					<f:selectItem value="#{null}" itemLabel="* TODAS *"/>
+					<f:selectItems value="#{libro.listadoSubcategorias}" 
+						var="subcategoria" 
+						itemValue="#{subcategoria.ID}" 
+						itemLabel="#{subcategoria.nombre}"/>
+				</h:selectOneMenu>
+				<h:message for="filtroSubcategoria"/>
+			</h:panelGrid>
+			
+			<h:commandButton value="Filtrar" action="#{libro.filtrarListado}"/>
+			<h:commandButton value="Agregar" action="/pages/libro.xhtml"/>
+			<h:outputText value="Cantidad de libros mostrados: #{libro.cantidad}"/>
+		</h:panelGrid>
+		
 		<h:dataTable value="#{libro.listado}" var="l">
 			<f:facet name="header">
 				<h:column>Listado de libros</h:column>
 			</f:facet>
+
 			<h:column>
-				#{l.ID}
+				<f:facet name="header">ID.</f:facet>
+				<h:link value="#{l.ID}" outcome="/pages/libro.xhtml">
+			      	<f:param name="id" value="#{l.ID}"/>
+			    </h:link>
 			</h:column>
 			<h:column>
+				<f:facet name="header">Nombre del libro</f:facet>
 				#{l.nombre}
 			</h:column>
 			<h:column>
+				<f:facet name="header">ISBN</f:facet>
 				#{l.ISBN}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Páginas</f:facet>
+				#{l.paginas}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Año</f:facet>
+				#{l.anio}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Subcategoría</f:facet>
+				#{l.subcategoria.nombre}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Categoría</f:facet>
+				#{l.subcategoria.categoria.nombre}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Editorial</f:facet>
+				#{l.editorial.nombre}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Abrev.</f:facet>
+				#{l.editorial.abreviatura}
 			</h:column>
 		</h:dataTable>
 	</h:form>

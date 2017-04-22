@@ -22,6 +22,18 @@ public class Subcategoria implements Serializable {
 	public Subcategoria() {
 		categoria = new Categoria();
 	}
+	
+	/**
+	 * @param iD
+	 * @param nombre
+	 * @param categoria
+	 */
+	public Subcategoria(long iD, String nombre, Categoria categoria) {
+		super();
+		ID = iD;
+		this.nombre = nombre;
+		this.categoria = categoria;
+	}
 
 	public long getID() {
 		return ID;
@@ -45,6 +57,11 @@ public class Subcategoria implements Serializable {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(this.ID);
 	}
 	
 }

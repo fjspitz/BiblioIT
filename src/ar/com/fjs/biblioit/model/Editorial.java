@@ -20,6 +20,18 @@ public class Editorial implements Serializable {
 	private String abreviatura;
 	
 	public Editorial() {}
+	
+	/**
+	 * @param iD
+	 * @param nombre
+	 * @param abreviatura
+	 */
+	public Editorial(long iD, String nombre, String abreviatura) {
+		super();
+		ID = iD;
+		this.nombre = nombre;
+		this.abreviatura = abreviatura;
+	}
 
 	public long getID() {
 		return ID;

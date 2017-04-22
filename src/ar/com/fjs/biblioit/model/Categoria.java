@@ -20,6 +20,18 @@ public class Categoria implements Serializable {
 	
 	public Categoria() {}
 	
+	/**
+	 * @param iD
+	 * @param nombre
+	 */
+	public Categoria(long iD, String nombre) {
+		super();
+		ID = iD;
+		this.nombre = nombre;
+	}
+
+
+
 	public long getID() {
 		return ID;
 	}
