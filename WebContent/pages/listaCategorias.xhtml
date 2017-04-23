@@ -32,13 +32,13 @@
 
 			<h:column>
 				<f:facet name="header">ID.</f:facet>
-				<h:link value="#{c.ID}" outcome="/pages/categoria.xhtml">
-			      	<f:param name="id" value="#{c.ID}"/>
-			    </h:link>
+			    #{c.ID}
 			</h:column>
 			<h:column>
 				<f:facet name="header">Nombre de la categoría</f:facet>
-				#{c.nombre}
+				<h:link value="#{c.nombre}" outcome="/pages/categoria.xhtml">
+			      	<f:param name="id" value="#{c.ID}"/>
+			    </h:link>
 			</h:column>
 		</h:dataTable>
 	</h:form>

@@ -32,13 +32,13 @@
 
 			<h:column>
 				<f:facet name="header">ID.</f:facet>
-				<h:link value="#{e.ID}" outcome="/pages/editorial.xhtml">
-			      	<f:param name="id" value="#{e.ID}"/>
-			    </h:link>
+			    #{e.ID}
 			</h:column>
 			<h:column>
 				<f:facet name="header">Nombre del editorial</f:facet>
-				#{e.nombre}
+				<h:link value="#{e.nombre}" outcome="/pages/editorial.xhtml">
+			      	<f:param name="id" value="#{e.ID}"/>
+			    </h:link>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Abreviatura</f:facet>
