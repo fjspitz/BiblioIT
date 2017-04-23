@@ -76,11 +76,11 @@ public class DatabaseManagment implements Serializable {
 						"categoria c on (s.categoria = c.id)");
 		stmt = conn.createStatement();
 		
-		if (! (nombreLibro == null || nombreLibro.trim().equalsIgnoreCase(""))) {
+		if (! (nombreLibro == null || nombreLibro.isEmpty())) {
 			if (! whereClause) {
 				strSQL.append(" where ");
 			}
-			strSQL.append("l.nombre LIKE '" + nombreLibro.trim() + "%" + "\'");
+			strSQL.append("UPPER(l.nombre) LIKE '%" + nombreLibro.trim().toUpperCase() + "%" + "\'");
 		}
 		
 		if (! (filtroSubcategoria == null || filtroSubcategoria.getID() == 0)) {
