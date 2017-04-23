@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:viewParam name="id" value="#{editorial.id}"/>
+    <f:viewAction action="#{editorial.cargar}"/> 
+</f:metadata>
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Librería técnica by FJS</title>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
+	<style>
+		body {
+			font-family: 'Source Sans Pro', sans-serif;
+		}
+		table {
+			font-size: 13px;
+		}
+	</style>
+</h:head>
+<h:body>
+	<h:form prependId="false">
+		<h:panelGrid columns="3">
+			<h:outputText value="ID:"/>
+			<h:inputText id="id" value="#{editorial.editorial.ID}"/>
+			<h:message for="id"/>
+		
+			<h:outputText value="Nombre:"/>
+			<h:inputText id="nombre" value="#{editorial.editorial.nombre}" required="true" size="120" maxlength="120"/>
+			<h:message for="nombre"/>
+			
+			<h:outputText value="Abreviatura:"/>
+			<h:inputText id="isbn" value="#{editorial.editorial.abreviatura}"/>
+			<h:message for="isbn"/>
+			
+			<h:commandButton value="Volver" action="listaEditoriales" immediate="true"/>
+			<h:commandButton value="Guardar" action="#{editorial.guardar}"/>
+			<h:outputText value=""/>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html> 

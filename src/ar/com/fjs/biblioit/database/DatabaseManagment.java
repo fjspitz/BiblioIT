@@ -43,6 +43,7 @@ public class DatabaseManagment implements Serializable {
 	private Statement stmt;
 	private PreparedStatement pstmt;
 	
+	private List<Categoria> listadoCategorias;
 	private List<Subcategoria> listadoSubcategorias;
 	private List<Editorial> listadoEditoriales;
 	private List<Libro> listadoLibros;
@@ -52,11 +53,16 @@ public class DatabaseManagment implements Serializable {
 	@PostConstruct
 	public void initialize() throws SQLException {
 		conn = datasource.getConnection();
+		actualizarBase();
+	}
+	
+	public void actualizarBase() throws SQLException {
+		listadoCategorias = cargarListadoCategorias();
 		listadoSubcategorias = cargarListadoSubcategorias();
 		listadoEditoriales = cargarListadoEditoriales();
 	}
 	
-	public List<Libro> cargarListado(String nombreLibro, Subcategoria filtroSubcategoria) throws SQLException {
+	public List<Libro> cargarListado(String nombreLibro, Subcategoria filtroSubcategoria, Editorial filtroEditorial) throws SQLException {
 		List<Libro> lista = new ArrayList<Libro>();
 		StringBuilder strSQL = new StringBuilder();
 		boolean whereClause = false;
@@ -76,6 +82,7 @@ public class DatabaseManagment implements Serializable {
 			}
 			strSQL.append("l.nombre LIKE '" + nombreLibro.trim() + "%" + "\'");
 		}
+		
 		if (! (filtroSubcategoria == null || filtroSubcategoria.getID() == 0)) {
 			if (! whereClause) {
 				strSQL.append(" where ");
@@ -83,6 +90,15 @@ public class DatabaseManagment implements Serializable {
 				strSQL.append(" and ");
 			}
 			strSQL.append("l.subcategoria = " + filtroSubcategoria.getID());
+		}
+		
+		if (! (filtroEditorial == null || filtroEditorial.getID() == 0)) {
+			if (! whereClause) {
+				strSQL.append(" where ");
+			} else {
+				strSQL.append(" and ");
+			}
+			strSQL.append("l.editorial = " + filtroEditorial.getID());
 		}
 
 		System.out.println("SQL: " + strSQL.toString());
@@ -98,10 +114,10 @@ public class DatabaseManagment implements Serializable {
 		return lista;
 	}
 	
-	private List<Subcategoria> cargarListadoSubcategorias() throws SQLException {
-		List<Subcategoria> lista = new ArrayList<Subcategoria>();
+	private List<Categoria> cargarListadoCategorias() throws SQLException {
+		List<Categoria> lista = new ArrayList<Categoria>();
 		
-		String strSQL = "select s.id, s.nombre from subcategoria s order by s.nombre";
+		String strSQL = "select c.id, c.nombre from categoria c order by c.id";
 		
 		stmt = conn.createStatement();
 		
@@ -109,7 +125,25 @@ public class DatabaseManagment implements Serializable {
         ResultSet rs = stmt.executeQuery(strSQL);
 		
         while(rs.next()) {
-        	Subcategoria subcategoria = new Subcategoria(rs.getLong("id"), rs.getString("nombre"), null);
+        	Categoria categoria = new Categoria(rs.getLong("id"), rs.getString("nombre"));
+        	lista.add(categoria);
+        }
+		return lista;
+	}
+	
+	private List<Subcategoria> cargarListadoSubcategorias() throws SQLException {
+		List<Subcategoria> lista = new ArrayList<Subcategoria>();
+		
+		String strSQL = "select s.id, s.nombre, s.categoria from subcategoria s order by s.nombre";
+		
+		stmt = conn.createStatement();
+		
+		System.out.println("SQL: " + strSQL);
+        ResultSet rs = stmt.executeQuery(strSQL);
+		
+        while(rs.next()) {
+        	Categoria categoria = cargarUnaCategoria(rs.getLong("categoria"));
+        	Subcategoria subcategoria = new Subcategoria(rs.getLong("id"), rs.getString("nombre"), categoria);
         	lista.add(subcategoria);
         }
 		return lista;
@@ -118,7 +152,7 @@ public class DatabaseManagment implements Serializable {
 	private List<Editorial> cargarListadoEditoriales() throws SQLException {
 		List<Editorial> lista = new ArrayList<Editorial>();
 		
-		String strSQL = "select e.id, e.nombre from editorial e";
+		String strSQL = "select e.id, e.nombre, e.abreviatura from editorial e";
 		
 		stmt = conn.createStatement();
 		
@@ -126,7 +160,7 @@ public class DatabaseManagment implements Serializable {
         ResultSet rs = stmt.executeQuery(strSQL);
 		
         while(rs.next()) {
-        	Editorial editorial = new Editorial(rs.getLong("id"), rs.getString("nombre"), null);
+        	Editorial editorial = new Editorial(rs.getLong("id"), rs.getString("nombre"), rs.getString("abreviatura"));
         	lista.add(editorial);
         }
 		return lista;
@@ -187,6 +221,135 @@ public class DatabaseManagment implements Serializable {
         }
 		return null;
 	}
+	
+	public Editorial cargarUnEditorial(long ID) throws SQLException {
+		String strSQL = "select " + 
+				"e.id, e.nombre, e.abreviatura " + 
+				"from editorial e " +  
+				"where l.id = " + ID;
+		stmt = conn.createStatement();
+		
+		System.out.println("SQL: " + strSQL);
+        ResultSet rs = stmt.executeQuery(strSQL);
+		
+        while(rs.next()) {
+        	Editorial editorial = new Editorial(rs.getLong("id"), rs.getString("nombre"), rs.getString("abreviatura"));
+        	return editorial;
+        }
+		return null;
+	}
+	
+	public Categoria cargarUnaCategoria(long ID) throws SQLException {
+		String strSQL = "select " + 
+				"c.id, c.nombre " + 
+				"from categoria c " +  
+				"where c.id = " + ID;
+		stmt = conn.createStatement();
+		
+		System.out.println("SQL: " + strSQL);
+        ResultSet rs = stmt.executeQuery(strSQL);
+		
+        while(rs.next()) {
+        	Categoria categoria = new Categoria(rs.getLong("id"), rs.getString("nombre"));
+        	return categoria;
+        }
+		return null;
+	}
+	
+	public Subcategoria cargarUnaSubcategoria(long ID) throws SQLException {
+		String strSQL = "select " + 
+				"s.id, s.nombre, s.categoria " + 
+				"from subcategoria s " +  
+				"where s.id = " + ID;
+		stmt = conn.createStatement();
+		
+		System.out.println("SQL: " + strSQL);
+        ResultSet rs = stmt.executeQuery(strSQL);
+		
+        while(rs.next()) {
+        	Categoria categoria = cargarUnaCategoria(rs.getLong("categoria"));
+        	Subcategoria subcategoria = new Subcategoria(rs.getLong("id"), rs.getString("nombre"), categoria);
+        	return subcategoria;
+        }
+		return null;
+	}
+	
+	public void guardarEditorial(Editorial editorial) {
+		String strSQL;
+		boolean isUpdate = true;
+		
+		if (editorial.getID() == 0) {
+			isUpdate = false;
+			strSQL = "insert into editorial (nombre, abreviatura) values (?,?)";
+		} else {
+			strSQL = "update editorial set nombre = ?, abreviatura = ? where id = ?";
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(strSQL);
+			
+			pstmt.setString(1, editorial.getNombre());
+			pstmt.setString(2, editorial.getAbreviatura());
+			if (isUpdate) {
+				pstmt.setLong(3, editorial.getID());
+			}
+			System.out.println("SQL: " + strSQL);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void guardarCategoria(Categoria categoria) {
+		String strSQL;
+		boolean isUpdate = true;
+		
+		if (categoria.getID() == 0) {
+			isUpdate = false;
+			strSQL = "insert into categoria (nombre) values (?)";
+		} else {
+			strSQL = "update categoria set nombre = ? where id = ?";
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(strSQL);
+			
+			pstmt.setString(1, categoria.getNombre());
+			if (isUpdate) {
+				pstmt.setLong(2, categoria.getID());
+			}
+			System.out.println("SQL: " + strSQL);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void guardarSubcategoria(Subcategoria subcategoria) {
+		String strSQL;
+		boolean isUpdate = true;
+		
+		if (subcategoria.getID() == 0) {
+			isUpdate = false;
+			strSQL = "insert into subcategoria (nombre, categoria) values (?, ?)";
+		} else {
+			strSQL = "update subcategoria set nombre = ?, categoria = ? where id = ?";
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(strSQL);
+			
+			pstmt.setString(1, subcategoria.getNombre());
+			pstmt.setLong(2, subcategoria.getCategoria().getID());
+			if (isUpdate) {
+				pstmt.setLong(3, subcategoria.getID());
+			}
+			System.out.println("SQL: " + strSQL);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public List<Subcategoria> getListadoSubcategorias() {
 		return listadoSubcategorias;
@@ -210,5 +373,13 @@ public class DatabaseManagment implements Serializable {
 
 	public void setListadoLibros(List<Libro> listadoLibros) {
 		this.listadoLibros = listadoLibros;
+	}
+
+	public List<Categoria> getListadoCategorias() {
+		return listadoCategorias;
+	}
+
+	public void setListadoCategorias(List<Categoria> listadoCategorias) {
+		this.listadoCategorias = listadoCategorias;
 	}
 }

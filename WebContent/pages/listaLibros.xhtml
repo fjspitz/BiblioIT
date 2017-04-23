@@ -29,11 +29,21 @@
 				<h:selectOneMenu id="filtroSubcategoria" value="#{libroBB.filtroSubcategoria.ID}" >
 					<f:selectItem value="#{null}" itemLabel="* TODAS *"/>
 					<f:selectItems value="#{libroBB.listadoSubcategorias}" 
-						var="subcategoria" 
-						itemValue="#{subcategoria.ID}" 
-						itemLabel="#{subcategoria.nombre}"/>
+						var="subcat" 
+						itemValue="#{subcat.ID}" 
+						itemLabel="#{subcat.nombre}"/>
 				</h:selectOneMenu>
 				<h:message for="filtroSubcategoria"/>
+				
+				<h:outputText value="Filtrar por editorial: "/>
+				<h:selectOneMenu id="filtroEditorial" value="#{libroBB.filtroEditorial.ID}" >
+					<f:selectItem value="#{null}" itemLabel="* TODAS *"/>
+					<f:selectItems value="#{libroBB.listadoEditoriales}" 
+						var="edi" 
+						itemValue="#{edi.ID}" 
+						itemLabel="#{edi.nombre}"/>
+				</h:selectOneMenu>
+				<h:message for="filtroEditorial"/>
 			</h:panelGrid>
 			
 			<h:commandButton value="Filtrar" action="#{libroBB.filtrarListado}"/>
@@ -52,13 +62,13 @@
 
 			<h:column>
 				<f:facet name="header">ID.</f:facet>
-				<h:link value="#{l.ID}" outcome="/pages/libro.xhtml">
-			      	<f:param name="id" value="#{l.ID}"/>
-			    </h:link>
+				#{l.ID}
 			</h:column>
 			<h:column>
 				<f:facet name="header">Nombre del libro</f:facet>
-				#{l.nombre}
+				<h:link value="#{l.nombre}" outcome="/pages/libro.xhtml">
+			      	<f:param name="id" value="#{l.ID}"/>
+			    </h:link>
 			</h:column>
 			<h:column>
 				<f:facet name="header">ISBN</f:facet>

@@ -39,6 +39,7 @@ public class LibroBackingBean implements Serializable {
 	private List<Editorial> listadoEditoriales;
 	
 	private String filtroNombre;
+	private Editorial filtroEditorial;
 	private Subcategoria filtroSubcategoria;
 	private int cantidad;
 	
@@ -54,6 +55,7 @@ public class LibroBackingBean implements Serializable {
 	public LibroBackingBean() {
 		filtroNombre = "";
 		filtroSubcategoria = new Subcategoria();
+		filtroEditorial = new Editorial();
 		listadoSubcategorias = new ArrayList<Subcategoria>();
 		listadoEditoriales = new ArrayList<Editorial>();
 		subcategoria = new Subcategoria();
@@ -63,7 +65,7 @@ public class LibroBackingBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		try {
-			listado = db.cargarListado("", null);
+			listado = db.cargarListado("", null, null);
 			cantidad = listado.size();
 			listadoSubcategorias = db.getListadoSubcategorias();
 			listadoEditoriales = db.getListadoEditoriales();
@@ -76,7 +78,7 @@ public class LibroBackingBean implements Serializable {
 	
 	public String filtrarListado() {
 		try {
-			listado = db.cargarListado(filtroNombre, filtroSubcategoria);
+			listado = db.cargarListado(filtroNombre, filtroSubcategoria, filtroEditorial);
 			cantidad = listado.size();
 		} catch (SQLException e) {
 			FacesMessage msg = new FacesMessage("Se ha producido un error con la base de datos", e.getMessage());
@@ -196,5 +198,13 @@ public class LibroBackingBean implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Editorial getFiltroEditorial() {
+		return filtroEditorial;
+	}
+
+	public void setFiltroEditorial(Editorial filtroEditorial) {
+		this.filtroEditorial = filtroEditorial;
 	}
 }

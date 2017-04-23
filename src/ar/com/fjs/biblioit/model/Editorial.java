@@ -56,4 +56,9 @@ public class Editorial implements Serializable {
 	public void setAbreviatura(String abreviatura) {
 		this.abreviatura = abreviatura;
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(this.ID);
+	}
 }

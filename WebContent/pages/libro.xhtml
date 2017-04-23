@@ -62,9 +62,9 @@
 			<h:outputText value="Editorial:"/>
 			<h:selectOneMenu id="editorial" value="#{libro.libro.editorial.ID}" >
 				<f:selectItems value="#{libro.listadoEditoriales}" 
-					var="editorial" 
-					itemValue="#{editorial.ID}" 
-					itemLabel="#{editorial.nombre}"/>
+					var="e" 
+					itemValue="#{e.ID}" 
+					itemLabel="#{e.nombre}"/>
 			</h:selectOneMenu>
 			<h:message for="editorial"/>
 			

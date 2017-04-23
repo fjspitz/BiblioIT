@@ -1,10 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Librería técnica by FJS</title>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
+	<style>
+		body {
+			font-family: 'Source Sans Pro', sans-serif;
+		}
+		table {
+			font-size: 13px;
+		}
+	</style>
+</h:head>
+<h:body>
+	<h:form>
+		<h:messages id="msgs" layout="table" showDetail="true" showSummary="true"/>
+		<h:panelGroup>
+			<h:commandButton value="Volver" action="/index.xhtml"/>
+			<h:commandButton value="Agregar" action="/pages/categoria.xhtml"/>
+		</h:panelGroup>
+		<h:outputText value="Cantidad de categorías mostradas: #{categoria.cantidad}"/>
+		
+		<h:dataTable value="#{categoria.listado}" var="c">
+			<f:facet name="header">
+				<h:column>Listado de categorías</h:column>
+			</f:facet>
 
-</body>
-</html>
+			<h:column>
+				<f:facet name="header">ID.</f:facet>
+				<h:link value="#{c.ID}" outcome="/pages/categoria.xhtml">
+			      	<f:param name="id" value="#{c.ID}"/>
+			    </h:link>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nombre de la categoría</f:facet>
+				#{c.nombre}
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</h:body>
+</html> 
