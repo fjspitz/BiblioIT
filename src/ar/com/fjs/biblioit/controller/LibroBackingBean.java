@@ -51,6 +51,7 @@ public class LibroBackingBean implements Serializable {
 	private int calificacion;
 	private Subcategoria subcategoria;
 	private Editorial editorial;
+	private boolean leyendo;
 	
 	public LibroBackingBean() {
 		filtroNombre = "";
@@ -206,5 +207,13 @@ public class LibroBackingBean implements Serializable {
 
 	public void setFiltroEditorial(Editorial filtroEditorial) {
 		this.filtroEditorial = filtroEditorial;
+	}
+
+	public boolean isLeyendo() {
+		return leyendo;
+	}
+
+	public void setLeyendo(boolean leyendo) {
+		this.leyendo = leyendo;
 	}
 }

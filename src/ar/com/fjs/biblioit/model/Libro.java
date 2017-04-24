@@ -23,6 +23,7 @@ public class Libro implements Serializable {
 	private int calificacion;
 	private Editorial editorial;
 	private Subcategoria subcategoria;
+	private boolean leyendo;
 
 	public Libro() {
 		editorial = new Editorial();
@@ -39,7 +40,7 @@ public class Libro implements Serializable {
 	 * @param subcategoria
 	 */
 	public Libro(long iD, String nombre, String iSBN, int paginas, short anio, 
-			int calificacion, Editorial editorial, Subcategoria subcategoria) {
+			int calificacion, Editorial editorial, Subcategoria subcategoria, boolean leyendo) {
 		super();
 		ID = iD;
 		this.nombre = nombre;
@@ -49,6 +50,7 @@ public class Libro implements Serializable {
 		this.calificacion = calificacion;
 		this.editorial = editorial;
 		this.subcategoria = subcategoria;
+		this.leyendo = leyendo;
 	}
 
 	public int getCalificacion() {
@@ -118,5 +120,13 @@ public class Libro implements Serializable {
 	@Override
 	public String toString() {
 		return String.valueOf(this.ID);
+	}
+
+	public boolean isLeyendo() {
+		return leyendo;
+	}
+
+	public void setLeyendo(boolean leyendo) {
+		this.leyendo = leyendo;
 	}
 }

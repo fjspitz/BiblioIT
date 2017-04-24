@@ -58,7 +58,7 @@
 					itemLabel="#{subcat.nombre}"/>
 			</h:selectOneMenu>
 			<h:message for="subcategoria"/>
-			
+		
 			<h:outputText value="Editorial:"/>
 			<h:selectOneMenu id="editorial" value="#{libro.libro.editorial.ID}" >
 				<f:selectItems value="#{libro.listadoEditoriales}" 
@@ -67,6 +67,10 @@
 					itemLabel="#{e.nombre}"/>
 			</h:selectOneMenu>
 			<h:message for="editorial"/>
+			
+			<h:outputText value="Leyendo:"/>
+			<h:selectBooleanCheckbox id="leyendo" value="#{libro.libro.leyendo}"/>
+			<h:message for="leyendo"/>
 			
 			<h:commandButton value="Volver" action="listaLibros" immediate="true"/>
 			<h:commandButton value="Guardar" action="#{libro.guardar}"/>

@@ -68,7 +68,7 @@ public class DatabaseManagment implements Serializable {
 		boolean whereClause = false;
 
 		strSQL.append("select " + 
-						"l.id, l.nombre, l.isbn, l.subcategoria, l.editorial, l.paginas, l.calificacion, l.anio, " +
+						"l.id, l.nombre, l.isbn, l.subcategoria, l.editorial, l.paginas, l.calificacion, l.anio, l.leyendo, " +
 						"s.nombre as nombreSubcategoria, s.categoria as idCategoria, e.nombre as nombreEditorial, e.abreviatura as abreviaturaEditorial, c.nombre as nombreCategoria " + 
 						"from libro l inner join " + 
 						"subcategoria s on (l.subcategoria = s.id) inner join " + 
@@ -108,7 +108,7 @@ public class DatabaseManagment implements Serializable {
         	Editorial editorial = new Editorial(rs.getLong("editorial"), rs.getString("nombreEditorial"), rs.getString("abreviaturaEditorial"));
         	Categoria categoria = new Categoria(rs.getLong("idCategoria"), rs.getString("nombreCategoria"));
         	Subcategoria subcategoria = new Subcategoria(rs.getLong("subcategoria"), rs.getString("nombreSubcategoria"), categoria);
-        	Libro libro = new Libro(rs.getLong("id"), rs.getString("nombre"), rs.getString("isbn"), rs.getInt("paginas"), rs.getShort("anio"), rs.getInt("calificacion"), editorial, subcategoria);
+        	Libro libro = new Libro(rs.getLong("id"), rs.getString("nombre"), rs.getString("isbn"), rs.getInt("paginas"), rs.getShort("anio"), rs.getInt("calificacion"), editorial, subcategoria, rs.getShort("leyendo") == 1 ? true : false);
         	lista.add(libro);
         }
 		return lista;
@@ -172,9 +172,9 @@ public class DatabaseManagment implements Serializable {
 		
 		if (libro.getID() == 0) {
 			isUpdate = false;
-			strSQL = "insert into libro (nombre, isbn, subcategoria, editorial, paginas, calificacion, anio) values (?,?,?,?,?,?,?)";
+			strSQL = "insert into libro (nombre, isbn, subcategoria, editorial, paginas, calificacion, anio, leyendo) values (?,?,?,?,?,?,?,?)";
 		} else {
-			strSQL = "update libro set nombre = ?, isbn = ?, subcategoria = ?, editorial = ?, paginas = ?, calificacion = ?, anio = ? where id = ?";
+			strSQL = "update libro set nombre = ?, isbn = ?, subcategoria = ?, editorial = ?, paginas = ?, calificacion = ?, anio = ?, leyendo = ? where id = ?";
 		}
 		
 		try {
@@ -187,8 +187,9 @@ public class DatabaseManagment implements Serializable {
 			pstmt.setInt(5, libro.getPaginas());
 			pstmt.setInt(6, libro.getCalificacion());
 			pstmt.setInt(7, libro.getAnio());
+			pstmt.setShort(8, (short) (libro.isLeyendo() ? 1 : 0));
 			if (isUpdate) {
-				pstmt.setLong(8, libro.getID());
+				pstmt.setLong(9, libro.getID());
 			}
 			
 			System.out.println("SQL: " + strSQL);
@@ -200,7 +201,7 @@ public class DatabaseManagment implements Serializable {
 	
 	public Libro cargarUnLibro(long ID) throws SQLException {
 		String strSQL = "select " + 
-				"l.id, l.nombre, l.isbn, l.subcategoria, l.editorial, l.paginas, l.calificacion, l.anio, " +
+				"l.id, l.nombre, l.isbn, l.subcategoria, l.editorial, l.paginas, l.calificacion, l.anio, l.leyendo, " +
 				"s.nombre as nombreSubcategoria, s.categoria as idCategoria, e.nombre as nombreEditorial, e.abreviatura as abreviaturaEditorial, c.nombre as nombreCategoria " + 
 				"from libro l inner join " + 
 				"subcategoria s on (l.subcategoria = s.id) inner join " + 
@@ -216,7 +217,7 @@ public class DatabaseManagment implements Serializable {
         	Editorial editorial = new Editorial(rs.getLong("editorial"), rs.getString("nombreEditorial"), rs.getString("abreviaturaEditorial"));
         	Categoria categoria = new Categoria(rs.getLong("idCategoria"), rs.getString("nombreCategoria"));
         	Subcategoria subcategoria = new Subcategoria(rs.getLong("subcategoria"), rs.getString("nombreSubcategoria"), categoria);
-        	Libro libro = new Libro(rs.getLong("id"), rs.getString("nombre"), rs.getString("isbn"), rs.getInt("paginas"), rs.getShort("anio"), rs.getInt("calificacion"), editorial, subcategoria);
+        	Libro libro = new Libro(rs.getLong("id"), rs.getString("nombre"), rs.getString("isbn"), rs.getInt("paginas"), rs.getShort("anio"), rs.getInt("calificacion"), editorial, subcategoria, rs.getShort("leyendo") == 1 ? true : false);
         	return libro;
         }
 		return null;
