@@ -37,6 +37,16 @@
 		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
 		<param-value>true</param-value>
 	</context-param>
+	<context-param>
+		<param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- BootsFaces theme -->
+	<context-param>
+		<param-name>BootsFaces_THEME</param-name>
+		<param-value>cerulean</param-value>
+	</context-param>
 
 	<listener>
 		<listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>

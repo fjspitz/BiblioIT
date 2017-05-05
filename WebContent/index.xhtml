@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Librería técnica by FJS</title>
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
+		rel="stylesheet" />
 	<style>
-		body {
-			font-family: 'Source Sans Pro', sans-serif;
-		}
-		table {
-			font-size: 13px;
-		}
-	</style>
+body {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+table {
+	font-size: 13px;
+}
+</style>
 </h:head>
 <h:body>
 	<h2>Biblioteca personal de libros técnicos</h2>
 	<h3>Fernando J. Spitz</h3>
 	<h:form>
-		<h:messages id="msgs" layout="table" showDetail="true" showSummary="true"/>
+		<h:messages id="msgs" layout="table" showDetail="true"
+			showSummary="true" />
 		<h:panelGrid columns="1">
 			<h:panelGroup>
-				<h:button value="Libros" outcome="pages/listaLibros.xhtml"/>
-				<h:button value="Editoriales" outcome="pages/listaEditoriales.xhtml"/>
-				<h:button value="Categorías" outcome="pages/listaCategorias.xhtml"/>
-				<h:button value="Subcategorías" outcome="pages/listaSubcategorias.xhtml"/>
-				<h:commandButton value="Actualizar base de datos" actionListener="#{db.actualizarBase}"/>
+				<h:button value="Libros" outcome="pages/listaLibros.xhtml" />
+				<h:button value="Editoriales" outcome="pages/listaEditoriales.xhtml" />
+				<h:button value="Categorías" outcome="pages/listaCategorias.xhtml" />
+				<h:button value="Subcategorías" outcome="pages/listaSubcategorias.xhtml" />
+				<h:commandButton value="Actualizar base de datos"
+					actionListener="#{db.actualizarBase}" />
+				
+				<h:button value="Test Login" outcome="/login.xhtml" />
 			</h:panelGroup>
 		</h:panelGrid>
 	</h:form>
 </h:body>
-</html> 
+</html>
