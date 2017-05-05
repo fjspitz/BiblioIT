@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>BiblioIT</name>
-	
+
 	<description>Bibliteca personal de libros técnicos de programación en JSF.</description>
 
 	<dependencies>
@@ -38,8 +38,14 @@
 			<scope>provided</scope>
 		</dependency>
 
-
+		<dependency>
+			<groupId>net.bootsfaces</groupId>
+			<artifactId>bootsfaces</artifactId>
+			<version>1.1.0</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
+	
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
