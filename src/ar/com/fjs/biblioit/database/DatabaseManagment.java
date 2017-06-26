@@ -79,6 +79,7 @@ public class DatabaseManagment implements Serializable {
 		if (! (nombreLibro == null || nombreLibro.isEmpty())) {
 			if (! whereClause) {
 				strSQL.append(" where ");
+				whereClause = true;
 			}
 			strSQL.append("UPPER(l.nombre) LIKE '%" + nombreLibro.trim().toUpperCase() + "%" + "\'");
 		}
@@ -86,6 +87,7 @@ public class DatabaseManagment implements Serializable {
 		if (! (filtroSubcategoria == null || filtroSubcategoria.getID() == 0)) {
 			if (! whereClause) {
 				strSQL.append(" where ");
+				whereClause = true;
 			} else {
 				strSQL.append(" and ");
 			}
@@ -95,6 +97,7 @@ public class DatabaseManagment implements Serializable {
 		if (! (filtroEditorial == null || filtroEditorial.getID() == 0)) {
 			if (! whereClause) {
 				strSQL.append(" where ");
+				whereClause = true;
 			} else {
 				strSQL.append(" and ");
 			}
@@ -227,7 +230,7 @@ public class DatabaseManagment implements Serializable {
 		String strSQL = "select " + 
 				"e.id, e.nombre, e.abreviatura " + 
 				"from editorial e " +  
-				"where l.id = " + ID;
+				"where e.id = " + ID;
 		stmt = conn.createStatement();
 		
 		System.out.println("SQL: " + strSQL);
