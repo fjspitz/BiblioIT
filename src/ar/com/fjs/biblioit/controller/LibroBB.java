@@ -1,4 +1,4 @@
-/* LibroBackingBean.java
+/* LibroBB.java
  * Creado el 20 abr. 2017
  */
 
@@ -30,7 +30,7 @@ import ar.com.fjs.biblioit.model.Subcategoria;
 
 @Named("libroBB")
 @ViewScoped
-public class LibroBackingBean implements Serializable {
+public class LibroBB implements Serializable {
 	private static final long serialVersionUID = 7800352691960185618L;
 	@Inject private DatabaseManagment db;
 	
@@ -53,7 +53,7 @@ public class LibroBackingBean implements Serializable {
 	private Editorial editorial;
 	private boolean leyendo;
 	
-	public LibroBackingBean() {
+	public LibroBB() {
 		filtroNombre = "";
 		filtroSubcategoria = new Subcategoria();
 		filtroEditorial = new Editorial();

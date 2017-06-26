@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:ui = "http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Librería técnica by FJS</title>
@@ -18,14 +20,9 @@
 </h:head>
 <h:body>
 	<h:form>
-		<h:messages id="msgs" layout="table" showDetail="true" showSummary="true"/>
-		<h:panelGroup>
-			<h:commandButton value="Volver" action="/index.xhtml"/>
-			<h:commandButton value="Agregar" action="/pages/categoria.xhtml"/>
-		</h:panelGroup>
-		<h:outputText value="Cantidad de categorías mostradas: #{categoria.cantidad}"/>
+		<h:messages id="msgs" layout="table" showDetail="true"/>
 		
-		<h:dataTable value="#{categoria.listado}" var="c">
+		<b:dataTable value="#{categoria.listado}" var="c">
 			<f:facet name="header">
 				<h:column>Listado de categorías</h:column>
 			</f:facet>
@@ -40,7 +37,12 @@
 			      	<f:param name="id" value="#{c.ID}"/>
 			    </h:link>
 			</h:column>
-		</h:dataTable>
+		</b:dataTable>
+		
+		<h:panelGroup>
+			<h:commandButton value="Volver" action="/index.xhtml"/>
+			<h:commandButton value="Agregar" action="/pages/categoria.xhtml"/>
+		</h:panelGroup>
 	</h:form>
 </h:body>
 </html> 

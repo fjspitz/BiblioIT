@@ -85,4 +85,9 @@ public class CategoriaController implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(id);
+	}
 }

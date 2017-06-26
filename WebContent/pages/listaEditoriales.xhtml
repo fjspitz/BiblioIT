@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:ui = "http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Librería técnica by FJS</title>
@@ -19,32 +21,29 @@
 <h:body>
 	<h:form>
 		<h:messages id="msgs" layout="table" showDetail="true" showSummary="true"/>
-		<h:panelGroup>
-			<h:commandButton value="Volver" action="/index.xhtml"/>
-			<h:commandButton value="Agregar" action="/pages/editorial.xhtml"/>
-		</h:panelGroup>
-		<h:outputText value="Cantidad de editoriales mostrados: #{editorial.cantidad}"/>
 		
-		<h:dataTable value="#{editorial.listado}" var="e">
-			<f:facet name="header">
-				<h:column>Listado de editoriales</h:column>
-			</f:facet>
-
-			<h:column>
-				<f:facet name="header">ID.</f:facet>
-			    #{e.ID}
-			</h:column>
+		
+		
+		<b:dataTable value="#{editorial.listado}" var="e">
+			<b:dataTableColumn label="ID." value="#{e.ID}"/>
+			<ui:remove>
+				<b:dataTableColumn label="Nombre del editorial" value="#{e.nombre}"/>
+			</ui:remove>
+			
 			<h:column>
 				<f:facet name="header">Nombre del editorial</f:facet>
 				<h:link value="#{e.nombre}" outcome="/pages/editorial.xhtml">
 			      	<f:param name="id" value="#{e.ID}"/>
 			    </h:link>
 			</h:column>
-			<h:column>
-				<f:facet name="header">Abreviatura</f:facet>
-				#{e.abreviatura}
-			</h:column>
-		</h:dataTable>
+			
+			<b:dataTableColumn label="Abreviatura" value="#{e.abreviatura}"/>
+		</b:dataTable>
+		
+		<h:panelGrid columns="2">
+			<h:commandButton value="Volver" action="/index.xhtml"/>
+			<h:commandButton value="Agregar" action="/pages/editorial.xhtml"/>
+		</h:panelGrid>
 	</h:form>
 </h:body>
 </html> 

@@ -2,7 +2,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html">
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"> 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Librería técnica by FJS</title>
@@ -12,97 +16,90 @@
 			font-family: 'Source Sans Pro', sans-serif;
 		}
 		table {
-			font-size: 13px;
+			font-size: 12px;
 		}
 	</style>
 </h:head>
 <h:body>
 	<h:form>
-		<h:messages id="msgs" layout="table" showDetail="true" showSummary="true"/>
-		<h:panelGrid columns="1">
-			<h:panelGrid columns="3">
-				<h:outputText value="Filtrar por nombre:"/>
-				<h:inputText id="filtroNombre" value="#{libroBB.filtroNombre}" size="60" maxlength="120"/>
-				<h:message for="filtroNombre"/>
+		<b:messages id="msgs" layout="table" showDetail="true" showSummary="false"/>
+		<b:container fluid="true">
+			<h:panelGrid columns="4">
+				<b:inputText col-md="24" placeholder="Filtrar por alguna palabra en el nombre del libro" id="filtroNombre" value="#{libroBB.filtroNombre}" size="60" maxlength="120"/>
 				
-				<h:outputText value="Filtrar por subcategoría: "/>
-				<h:selectOneMenu id="filtroSubcategoria" value="#{libroBB.filtroSubcategoria.ID}" >
-					<f:selectItem value="#{null}" itemLabel="* TODAS *"/>
+				<b:selectOneMenu id="filtroSubcategoria" value="#{libroBB.filtroSubcategoria.ID}" required="false" converter="omnifaces.SelectItemsConverter">
+					<f:selectItem value="#{null}" itemLabel="Seleccionar una subcategoría"/>
 					<f:selectItems value="#{libroBB.listadoSubcategorias}" 
 						var="subcat" 
 						itemValue="#{subcat.ID}" 
 						itemLabel="#{subcat.nombre}"/>
-				</h:selectOneMenu>
-				<h:message for="filtroSubcategoria"/>
+				</b:selectOneMenu>
 				
-				<h:outputText value="Filtrar por editorial: "/>
-				<h:selectOneMenu id="filtroEditorial" value="#{libroBB.filtroEditorial.ID}" >
-					<f:selectItem value="#{null}" itemLabel="* TODAS *"/>
+				<b:selectOneMenu id="filtroEditorial" value="#{libroBB.filtroEditorial.ID}" required="false" converter="omnifaces.SelectItemsConverter">
+					<f:selectItem value="#{null}" itemLabel="Seleccionar una editorial"/>
 					<f:selectItems value="#{libroBB.listadoEditoriales}" 
 						var="edi" 
 						itemValue="#{edi.ID}" 
 						itemLabel="#{edi.nombre}"/>
-				</h:selectOneMenu>
-				<h:message for="filtroEditorial"/>
+				</b:selectOneMenu>
+				
+				<b:commandButton value="Filtrar" action="#{libroBB.filtrarListado}"/>
 			</h:panelGrid>
-			
-			<h:commandButton value="Filtrar" action="#{libroBB.filtrarListado}"/>
-			<h:panelGroup>
-				<h:commandButton value="Volver" action="/index.xhtml"/>
-				<h:commandButton value="Agregar" action="/pages/libro.xhtml"/>
-			</h:panelGroup>
-			
-			<h:outputText value="Cantidad de libros mostrados: #{libroBB.cantidad}"/>
-		</h:panelGrid>
 		
-		<h:dataTable value="#{libroBB.listado}" var="l">
-			<f:facet name="header">
-				<h:column>Listado de libros</h:column>
-			</f:facet>
-
-			<h:column>
-				<f:facet name="header">ID.</f:facet>
-				#{l.ID}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Nombre del libro</f:facet>
-				<h:link value="#{l.nombre}" outcome="/pages/libro.xhtml">
-			      	<f:param name="id" value="#{l.ID}"/>
-			    </h:link>
-			</h:column>
-			<h:column>
-				<f:facet name="header">ISBN</f:facet>
-				#{l.ISBN}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Páginas</f:facet>
-				#{l.paginas}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Año</f:facet>
-				#{l.anio}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Categoría</f:facet>
-				#{l.subcategoria.categoria.nombre}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Subcategoría</f:facet>
-				#{l.subcategoria.nombre}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Editorial</f:facet>
-				#{l.editorial.nombre}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Abrev.</f:facet>
-				#{l.editorial.abreviatura}
-			</h:column>
-			<h:column>
-				<f:facet name="header">Leyendo</f:facet>
-				<h:selectBooleanCheckbox value="#{l.leyendo}"/>
-			</h:column>
-		</h:dataTable>
+			<b:dataTable value="#{libroBB.listado}" var="l">
+				<f:facet name="header">
+					<h:column>Listado de libros</h:column>
+				</f:facet>
+	
+				<h:column>
+					<f:facet name="header">ID.</f:facet>
+					#{l.ID}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nombre del libro</f:facet>
+					<h:link value="#{l.nombre}" outcome="/pages/libroBoots.xhtml">
+				      	<f:param name="id" value="#{l.ID}"/>
+				    </h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">ISBN</f:facet>
+					#{l.ISBN}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Páginas</f:facet>
+					#{l.paginas}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Año</f:facet>
+					#{l.anio}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Categoría</f:facet>
+					#{l.subcategoria.categoria.nombre}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Subcategoría</f:facet>
+					#{l.subcategoria.nombre}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Editorial</f:facet>
+					#{l.editorial.nombre}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Abrev.</f:facet>
+					#{l.editorial.abreviatura}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Leyendo</f:facet>
+					<h:selectBooleanCheckbox value="#{l.leyendo}"/>
+				</h:column>
+			</b:dataTable>
+			
+			<h:panelGrid columns="2">
+				<h:commandButton value="Volver" action="/index.xhtml"/>
+				<h:commandButton value="Agregar" action="/pages/libroBoots.xhtml"/>
+			</h:panelGrid>
+		</b:container>
 	</h:form>
 </h:body>
 </html> 

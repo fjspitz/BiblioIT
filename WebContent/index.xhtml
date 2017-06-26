@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui = "http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Librería técnica by FJS</title>
@@ -28,8 +29,12 @@ table {
 			showSummary="true" />
 		<h:panelGrid columns="1">
 			<h:panelGroup>
-				<h:button value="Libros" outcome="pages/listaLibros.xhtml" />
-				<h:button value="Editoriales" outcome="pages/listaEditoriales.xhtml" />
+				<ui:remove>
+					<h:button value="Libros" outcome="pages/listaLibros.xhtml" />
+					<h:button value="Editoriales" outcome="pages/listaEditoriales.xhtml" />
+				</ui:remove>
+				<h:button value="Libros" outcome="pages/listaLibrosBoots.xhtml" />
+				<h:button value="Editoriales" outcome="pages/listaEditorialesBoots.xhtml" />
 				<h:button value="Categorías" outcome="pages/listaCategorias.xhtml" />
 				<h:button value="Subcategorías" outcome="pages/listaSubcategorias.xhtml" />
 				<h:commandButton value="Actualizar base de datos"

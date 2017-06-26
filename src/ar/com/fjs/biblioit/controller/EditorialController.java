@@ -86,4 +86,9 @@ public class EditorialController implements Serializable {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(id);
+	}
 }

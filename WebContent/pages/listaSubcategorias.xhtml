@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:ui = "http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Librería técnica by FJS</title>
@@ -19,14 +20,9 @@
 </h:head>
 <h:body>
 	<h:form>
-		<h:messages id="msgs" layout="table" showDetail="true" showSummary="true"/>
-		<h:panelGroup>
-			<h:commandButton value="Volver" action="/index.xhtml"/>
-			<h:commandButton value="Agregar" action="/pages/subcategoria.xhtml"/>
-		</h:panelGroup>
-		<h:outputText value="Cantidad de subcategorías mostradas: #{subcategoria.cantidad}"/>
+		<h:messages id="msgs" layout="table" showDetail="true"/>
 		
-		<h:dataTable value="#{subcategoria.listado}" var="s">
+		<b:dataTable value="#{subcategoria.listado}" var="s">
 			<f:facet name="header">
 				<h:column>Listado de subcategorías</h:column>
 			</f:facet>
@@ -46,7 +42,11 @@
 				<f:facet name="header">Categoría</f:facet>
 				#{s.categoria.nombre}
 			</h:column>
-		</h:dataTable>
+		</b:dataTable>
+		<h:panelGroup>
+			<h:commandButton value="Volver" action="/index.xhtml"/>
+			<h:commandButton value="Agregar" action="/pages/subcategoria.xhtml"/>
+		</h:panelGroup>
 	</h:form>
 </h:body>
 </html> 

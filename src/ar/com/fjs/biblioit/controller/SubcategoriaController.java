@@ -96,4 +96,9 @@ public class SubcategoriaController implements Serializable {
 	public void setListadoCategorias(List<Categoria> listadoCategorias) {
 		this.listadoCategorias = listadoCategorias;
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(id);
+	}
 }

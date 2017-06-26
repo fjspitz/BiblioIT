@@ -3,7 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:b="http://bootsfaces.net/ui"
+    xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
 
 <f:metadata>
     <f:viewParam name="id" value="#{libro.id}"/>
@@ -24,58 +27,52 @@
 	</style>
 </h:head>
 <h:body>
-	<h:form prependId="false">
-		<h:panelGrid columns="3">
-			<h:outputText value="ID:"/>
-			<h:inputText id="id" value="#{libro.libro.ID}"/>
-			<h:message for="id"/>
-		
-			<h:outputText value="Nombre:"/>
-			<h:inputText id="nombre" value="#{libro.libro.nombre}" required="true" size="120" maxlength="120"/>
-			<h:message for="nombre"/>
+	<b:container>
+	<b:form horizontal="true">
+		<b:formGroup>
+			<b:inputText id="id" label="ID" value="#{libro.libro.ID}" label-col-md="4" col-md="8"/>
+			<b:message for="id"/>
+			<b:focus target="id" />
+		</b:formGroup>
+			<b:inputText id="nombre" label="Nombre" value="#{libro.libro.nombre}" required="true" size="120" maxlength="120" label-col-md="4" col-md="8"/>
+			<b:message for="nombre"/>
+
+			<b:inputText id="isbn" label="ISBN" value="#{libro.libro.ISBN}" label-col-md="4" col-md="8"/>
+			<b:message for="isbn"/>
 			
-			<h:outputText value="ISBN:"/>
-			<h:inputText id="isbn" value="#{libro.libro.ISBN}"/>
-			<h:message for="isbn"/>
+			<b:inputText id="paginas" label="Páginas" value="#{libro.libro.paginas}" label-col-md="4" col-md="8" required="true"/>
+			<b:message for="paginas"/>
 			
-			<h:outputText value="Páginas:"/>
-			<h:inputText id="paginas" value="#{libro.libro.paginas}" required="true"/>
-			<h:message for="paginas"/>
+			<b:inputText id="calificacion" label="Calificación" value="#{libro.libro.calificacion}" label-col-md="4" col-md="8" required="false"/>
+			<b:message for="calificacion"/>
 			
-			<h:outputText value="Calificación:"/>
-			<h:inputText id="calificacion" value="#{libro.libro.calificacion}" required="false"/>
-			<h:message for="calificacion"/>
+			<b:inputText id="anio" label="Año" value="#{libro.libro.anio}" required="true" label-col-md="4" col-md="8"/>
+			<b:message for="anio"/>
 			
-			<h:outputText value="Año:"/>
-			<h:inputText id="anio" value="#{libro.libro.anio}" required="true"/>
-			<h:message for="anio"/>
-			
-			<h:outputText value="Subcategoría:"/>
-			<h:selectOneMenu id="subcategoria" value="#{libro.libro.subcategoria.ID}" >
+			<b:selectOneMenu id="subcategoria" label="Subcategoría" value="#{libro.libro.subcategoria.ID}" label-col-md="4" col-md="8">
 				<f:selectItems value="#{libro.listadoSubcategorias}" 
 					var="subcat" 
 					itemValue="#{subcat.ID}" 
 					itemLabel="#{subcat.nombre}"/>
-			</h:selectOneMenu>
-			<h:message for="subcategoria"/>
+			</b:selectOneMenu>
+			<b:message for="subcategoria"/>
 		
-			<h:outputText value="Editorial:"/>
-			<h:selectOneMenu id="editorial" value="#{libro.libro.editorial.ID}" >
+			<b:selectOneMenu id="editorial" label="Editorial" value="#{libro.libro.editorial.ID}" label-col-md="4" col-md="8">
 				<f:selectItems value="#{libro.listadoEditoriales}" 
 					var="e" 
 					itemValue="#{e.ID}" 
 					itemLabel="#{e.nombre}"/>
-			</h:selectOneMenu>
-			<h:message for="editorial"/>
+			</b:selectOneMenu>
+			<b:message for="editorial"/>
 			
-			<h:outputText value="Leyendo:"/>
-			<h:selectBooleanCheckbox id="leyendo" value="#{libro.libro.leyendo}"/>
-			<h:message for="leyendo"/>
+			<b:selectBooleanCheckbox id="leyendo" label="Leyendo" value="#{libro.libro.leyendo}" label-col-md="4" col-md="8"/>
+			<b:message for="leyendo"/>
 			
-			<h:commandButton value="Volver" action="listaLibros" immediate="true"/>
-			<h:commandButton value="Guardar" action="#{libro.guardar}"/>
+			<b:commandButton value="Volver" action="listaLibrosBoots" immediate="true"/>
+			<b:commandButton value="Guardar" action="#{libro.guardar}"/>
 			<h:outputText value=""/>
-		</h:panelGrid>
-	</h:form>
+		
+	</b:form>
+	</b:container>
 </h:body>
 </html> 
